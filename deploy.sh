@@ -8,12 +8,22 @@ cd /home/ubuntu/epicbook
 # Load env vars
 export $(grep -v '^#' .env | xargs)
 
+# Determine whether to use old docker-compose or new plugin
+if command -v docker-compose &> /dev/null; then
+    COMPOSE_CMD="docker-compose"
+elif docker compose version &> /dev/null; then
+    COMPOSE_CMD="docker compose"
+else
+    echo "Error: docker-compose not found. Install docker-compose or Docker Compose plugin."
+    exit 1
+fi
+
 echo "📦 Pulling latest images..."
-docker-compose pull
+$COMPOSE_CMD pull
 
 echo "🔄 Restarting stack..."
-docker-compose down
-docker-compose up -d
+$COMPOSE_CMD down
+$COMPOSE_CMD up -d
 
 echo "✅ Deployment finished"
-docker-compose ps
+$COMPOSE_CMD ps
