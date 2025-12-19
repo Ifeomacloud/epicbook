@@ -3,7 +3,7 @@ set -e
 
 echo "🚀 CI/CD Deployment Started..."
 
-cd /home/ubuntu/epicbook
+cd /home/ubuntu/theepicbook
 
 # Load env vars
 export $(grep -v '^#' .env | xargs)
