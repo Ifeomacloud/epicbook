@@ -1,14 +1,14 @@
-# Stage 1: Build
-FROM node:20-alpine AS builder
-WORKDIR /app
-COPY package*.json ./
-RUN npm install --frozen-lockfile
-COPY . .
-RUN npm run build
-
-# Stage 2: Serve
+# Use Nginx as the base image
 FROM nginx:alpine
-COPY --from=builder /app/build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Remove default Nginx content
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy your frontend files to Nginx's html folder
+COPY . /usr/share/nginx/html
+
+# Expose port 80
 EXPOSE 80
+
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
