@@ -9,7 +9,7 @@ cd /home/ubuntu/epicbook
 export $(grep -v '^#' .env | xargs)
 
 # Use Docker Compose plugin instead of old binary
-COMPOSE_CMD="docker compose"
+COMPOSE_CMD="docker-compose"
 
 echo "📦 Pulling latest images..."
 $COMPOSE_CMD pull
