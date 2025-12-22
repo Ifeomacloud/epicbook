@@ -1,26 +1,12 @@
-version: "3.9"
-
 services:
-  frontend:
-    build:
-      context: ./frontend
-    container_name: epicbook-frontend
-    depends_on:
-      backend:
-        condition: service_healthy
-    networks:
-      - frontend_net
-      - backend_net
-
   backend:
-    build:
-      context: ./backend
+    image: ifeoma028/epicbook-backend:latest
     container_name: epicbook-backend
     environment:
-      - DB_HOST=database
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
+      DB_HOST: database
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
     depends_on:
       database:
         condition: service_healthy
@@ -31,8 +17,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    volumes:
-      - backend_logs:/app/logs
 
   database:
     image: postgres:15-alpine
@@ -45,33 +29,20 @@ services:
       - db_data:/var/lib/postgresql/data
     networks:
       - backend_net
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   reverse-proxy:
-    image: nginx:alpine
+    image: ifeoma028/epicbook-nginx:latest
     container_name: epicbook-proxy
-    volumes:
-      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf
-      - proxy_logs:/var/log/nginx
     ports:
       - "80:80"
-      - "443:443"
     depends_on:
-      - frontend
-      - backend
+      backend:
+        condition: service_healthy
     networks:
-      - frontend_net
       - backend_net
 
 volumes:
   db_data:
-  proxy_logs:
-  backend_logs:
 
 networks:
-  frontend_net:
   backend_net:
