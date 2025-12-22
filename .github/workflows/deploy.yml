@@ -32,12 +32,6 @@ jobs:
         docker build -t $DOCKERHUB_USERNAME/epicbook-backend:latest ./backend
         docker push $DOCKERHUB_USERNAME/epicbook-backend:latest
 
-    # 🐳 Build & Push Nginx Image
-    - name: Build & Push Nginx Image
-      run: |
-        docker build -t $DOCKERHUB_USERNAME/epicbook-nginx:latest ./backend/nginx
-        docker push $DOCKERHUB_USERNAME/epicbook-nginx:latest
-
     # 🚀 Deploy on VM
     - name: Deploy to VM
       uses: appleboy/ssh-action@v0.1.7
