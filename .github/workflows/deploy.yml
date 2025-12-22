@@ -29,8 +29,14 @@ jobs:
     # 🐳 Build & Push Backend Image
     - name: Build & Push Backend Image
       run: |
-        docker build -t $DOCKERHUB_USERNAME/epicbook-backend:latest .
+        docker build -t $DOCKERHUB_USERNAME/epicbook-backend:latest ./backend
         docker push $DOCKERHUB_USERNAME/epicbook-backend:latest
+
+    # 🐳 Build & Push Nginx Image
+    - name: Build & Push Nginx Image
+      run: |
+        docker build -t $DOCKERHUB_USERNAME/epicbook-nginx:latest ./backend/nginx
+        docker push $DOCKERHUB_USERNAME/epicbook-nginx:latest
 
     # 🚀 Deploy on VM
     - name: Deploy to VM
