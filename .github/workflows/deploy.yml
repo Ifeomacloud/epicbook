@@ -29,7 +29,7 @@ jobs:
     # 🐳 Build & Push Backend Image
     - name: Build & Push Backend Image
       run: |
-        docker build -t $DOCKERHUB_USERNAME/epicbook-backend:latest ./backend
+        docker build -t $DOCKERHUB_USERNAME/epicbook-backend:latest .
         docker push $DOCKERHUB_USERNAME/epicbook-backend:latest
 
     # 🚀 Deploy on VM
