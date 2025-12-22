@@ -35,7 +35,7 @@ jobs:
     # 🐳 Build & Push Nginx Image
     - name: Build & Push Nginx Image
       run: |
-        docker build -t $DOCKERHUB_USERNAME/epicbook-nginx:latest ./epicbook/backend/nginx
+        docker build -t $DOCKERHUB_USERNAME/epicbook-nginx:latest ./theepicbook/backend/nginx
         docker push $DOCKERHUB_USERNAME/epicbook-nginx:latest
 
     # 🚀 Deploy on VM
