@@ -35,3 +35,14 @@ Both the Web Server and DB Server use attached **EBS volumes** with **LVM partit
 ### Connect to Web Server
 ```bash
 ssh -i steghub.pem ec2-user@13.53.138.153
+```
+
+
+## Step 3 — Configure Storage (DB Server)
+- Repeat the steps from Step 2 on the DB Server with these changes:
+
+- Connect to: ssh -i steghub.pem ec2-user@16.171.45.85
+
+- reate db-lv instead of apps-lv.
+
+- Mount it to /db instead of /var/www/html.
